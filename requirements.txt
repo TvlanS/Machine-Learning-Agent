@@ -1,0 +1,22 @@
+# === Core framework ===
+crewai[tools]
+crewai-tools[e2b]
+
+
+# Core Agentic & Workflow Frameworks
+crewai>=0.30.0
+pydantic # Kept below 2.8 to avoid the filtered_warn() conflict
+
+# Data Manipulation & File Management
+pandas
+pyprojroot
+
+# Machine Learning & Optimization
+scikit-learn
+xgboost
+optuna
+
+# Statistical Analysis & Visualization
+dython
+matplotlib
+scipy

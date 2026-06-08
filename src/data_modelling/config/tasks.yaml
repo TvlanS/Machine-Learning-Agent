@@ -1,0 +1,73 @@
+correlation_analysis:
+    description: >
+      Initial dataset path = {dataset_path}
+      Dataset description = {dataset_description}
+      hardrules = {hard_rules}
+      goal = {goal_crew}
+      date_time = {date_time}
+      
+  
+      1) Perform data description 
+      
+      2) Read the dataset description of the from the text file given if the link is given.
+
+      3) Identify which feature needs to be excluded with the support of the txt description, hard rule : ask user if they want to drop it and drop it based on the user' response.
+
+      4) Based on the data description, analyse whether valid features (not identified in step 2) require transformation, including one-hot encoding.
+
+      5) Using the path returned in step 3, apply one-hot encoding to transform the categorical features, excluding all redundant features identified in step 2 as well as continuous features.
+
+      6) Using the new dataset path from step 4 (the transformed dataset), perform correlationto find the features with the highest correlation using the available tool.
+
+      7) Run data description on the dataset path from step 4 to obtain the new dataset characteristics.
+
+      8) Pick 3 sets of features for modelling, starting with the set that includes the lowest number of features and progressing to slightly larger sets.
+
+      9) Write the summary output in markdown format , return the markdown path as transformation_summary_{date_time}. Write the file in the same file as the original dataset. Include the path of the new dataset in the markdown file.
+
+    expected_output: >
+      A structured consise output in bullet form , ensure to provide reasoning for your choices.
+
+      For 8) generate astructured output in text on the correlation sets and reasoning , provide a json output as well as following:
+
+      {
+          "feature_set_1": [feature1, feature2, feature3],
+          "feature_set_2": [feature4, feature5, feature6],
+          "feature_set_3": [feature7, feature8, feature9],
+      }
+
+    agent: data_transformation_a
+
+
+machine_learning:
+    description: >
+
+      Initial dataset path = {dataset_path}
+      Dataset description = {dataset_description}
+      hardrules = {hard_rules}
+      goal = {goal_crew}
+      date_time = {date_time}
+      
+  
+      1) Read the transformation summary markdown file listed as transformation_summary_{date_time} in the working directory , don't read the csv.
+      
+      2) Pick the smallest features set from the output of the data transformation agent and run the machine learning modeling on it based on the cleaned dataset given by transformation agent previously 
+      , if the user explicitly mentions to use the provided path then proceed with the path provided by user if not use the path provided by the data transformation agent.
+
+      3) Based on the output Identify the weakness and strength of the features used such based on the metrics given.
+
+      4) Repeat step 2 and 3 for the other features sets.
+
+      5) Also run all the feature sets if the output is not as per desired and you can try other combination of features based on the correaltion analysis output.
+
+      6) If data balancing analysis is stated in the summary document from data transformation , study the output of all the features and identify if dataset balancing is required.
+
+      7) Write the summary output in markdown format of all your findings, analysis, recommendation and conclusion. file name is modelling_summary_{date_time}
+
+    expected_output: >
+      A structured consise output in bullet form , ensure to provide reasoning for your choices.
+
+    agent: machine_learning_a
+    
+    
+
