@@ -38,7 +38,7 @@ flowchart LR
 
     WRITE_MD --> CHECK_FAIL{Any step failed?}
     CHECK_FAIL -->|Yes| REPORT_MGR[Report to manager]
-    REPORT_MGR --> END_FAIL([Deal failed])
+    REPORT_MGR --> END_FAIL([Process failed])
     CHECK_FAIL -->|No| END_SUCCESS([Output to Agent 2])
 
     classDef dataPrep fill:#d9eaf7,stroke:#5e8ab4,stroke-width:2px,color:#1e3a5f
@@ -81,8 +81,8 @@ flowchart LR
 
     WRITE_FINAL --> CHECK_FAIL2{Any step failed?}
     CHECK_FAIL2 -->|Yes| REPORT_MGR2[Report to manager]
-    REPORT_MGR2 --> END_FAIL([Deal failed])
-    CHECK_FAIL2 -->|No| END_SUCCESS([Deal closed])
+    REPORT_MGR2 --> END_FAIL([Process failed])
+    CHECK_FAIL2 -->|No| END_SUCCESS([Process closed])
 
     classDef mlTask fill:#d8f0e6,stroke:#388e6f,stroke-width:2px,color:#1e4a3b
     classDef decision fill:#fff0d6,stroke:#c47f2e,stroke-width:2px,color:#7a4d1a
