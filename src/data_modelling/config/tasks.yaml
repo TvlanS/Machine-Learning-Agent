@@ -15,7 +15,7 @@ correlation_analysis:
 
       4) Based on the data description, analyse whether valid features (not identified in step 2) require transformation, including one-hot encoding.
 
-      5) Using the path returned in step 3, apply one-hot encoding to transform the categorical features, excluding all redundant features identified in step 2 as well as continuous features.
+      5) Using the path returned in step 3, if necessary apply one-hot encoding to transform any categorical features that are needs to be one-hot encoded with reasoning, excluding all redundant features identified in step 2 as well as continuous features.
 
       6) Using the new dataset path from step 4 (the transformed dataset), perform correlationto find the features with the highest correlation using the available tool.
 

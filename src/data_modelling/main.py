@@ -24,10 +24,10 @@ format_ = now.strftime("%Y_%m_%d_%H_%M_%S")
 
 class ContentState(BaseModel):
 
-    dataset_path: str = "C:/Users/tvlan/Documents/1.0 Python/data_modelling/datafolder/early_sepsis_full_simulated_dataset_dropped_encoded_20260607_195121.csv"
-    goal_crew: str = "Target feature = sepsis_risk , trasformation summmary = C:/Users/tvlan/Documents/1.0 Python/data_modelling/datafolder/transformation_summary_2026_06_07_19_50_49.md "
+    dataset_path: str = "C:/Users/tvlan/Documents/1.0 Python/data_modelling/datafolder/final_dataset_for_step2.csv"
+    goal_crew: str = "Target feature = sepsis_risk"
     datadesc: str = "C:/Users/tvlan/Documents/1.0 Python/data_modelling/datafolder/dataset_description.txt"
-    hard_rules: str = "If the tools don't run stop and report back to manager. If the user explicitly mentioned to skip  a task you must obliged and skip to the next task. Never use emojis, generate any document based on ISO/IEEE 82079-1. Never read CSV filess"
+    hard_rules: str = "If the tools don't run stop and report back to manager. If the user explicitly mentioned to skip  a task you must obliged and skip to the next task. Never use emojis, generate any document based on ISO/IEEE 82079-1. Never read CSV/dataset files"
     date_time : str = f"current date and time {format_} , format = %Y_%m_%d_%H_%M_%S "
     result: str = ""
 

@@ -17,6 +17,8 @@ from crewai.tools import BaseTool ,tool
 import dython
 from dython.nominal import associations
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 from scipy.stats import pearsonr
@@ -406,18 +408,60 @@ class correlation_tool(BaseTool):
 
         output = "\n".join(header_lines) + "\n" + target_assoc.to_string()
 
+        paths = Path(dataset_path)
+        parents = paths.parent
+
+        now_ = datetime.now()
+        timestamp = now_.strftime("%Y%m%d_%H%M%S")
+
+        heatmap_path = parents/f"correlation_heatmap_{timestamp}.png"
+
+        try:
+            import numpy as np
+
+            # Mask the upper triangle (including diagonal) to avoid redundancy
+            mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+
+            # Scale annotation font size down for larger matrices to prevent overlap
+            n = corr_matrix.shape[0]
+            annot_fontsize = max(6, 12 - n // 2)
+
+            plt.figure(figsize=(10, 10))
+
+            # Draw the heatmap using a clean color palette (coolwarm)
+            sns.heatmap(
+                corr_matrix,
+                mask=mask,           # Hide upper triangle
+                annot=True,          # Show the correlation numbers inside the squares
+                fmt=".2f",           # Limit to 2 decimal places
+                cmap="coolwarm",     # Red for positive correlation, blue for negative
+                vmin=-1, vmax=1,     # Fix scale between -1 and 1
+                square=True,         # Force square shapes
+                linewidths=0.5,      # Small gap between squares
+                annot_kws={"size": annot_fontsize}  # Scale font to matrix size
+            )
+            plt.title(f"Correlation Heatmap - Target: {target_feature}", fontsize=14)
+            plt.tight_layout()
+            plt.savefig(heatmap_path, dpi=300)
+            plt.close()
+            heatmap_output = f"Heatmap saved successfully to: '{heatmap_path}'"
+            print(heatmap_output)
+        except Exception as plot_error:
+            heatmap_output = f"Failed to generate heatmap plot: {plot_error}"
+            print(heatmap_output)
+
         return output
 
 
 if __name__ == "__main__":
-    path = r"C:\Users\tvlan\Documents\Data Mining\1.0 Assignment\2.0 Assignment 2\2.0 Dataset\early_sepsis_full_simulated_dataset_dropped_encoded_20260607_134508.csv"
+    path = r"C:\Users\tvlan\Documents\1.0 Python\data_modelling\datafolder\early_sepsis_full_simulated_dataset_dropped_encoded_20260607_195121.csv"
 
-    tool = prediction_tool()
+    tool = correlation_tool()
     result_path = tool._run(
-        path=path,
-        target='sepsis_risk',
-        label0 ="NoSpesis",
-        label1 = "yesSepsis")
+        dataset_path = path,
+        target_feature = "sepsis_risk",
+        excluded = None
+        )
     
     print(result_path)
-      
+
